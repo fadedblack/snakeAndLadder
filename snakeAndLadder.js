@@ -80,7 +80,7 @@ function getALine(length) {
   }
 
   return line;
-} 
+}
 
 function createMessageBox(message) {
   const box = '┏' + getALine(message.length) + '┓\n┃' + message + '┃\n┗';
@@ -123,7 +123,7 @@ function getSnakeOrLadder(playerPosition) {
 
 function playerPosMessage(updatedPlayerPos, playerPosition, diceValue) {
   if (updatedPlayerPos < playerPosition) {
-    console.log(createMessageBox("Ohh noo 😱.... 🐍 A snake bite you.."));
+    console.log(createMessageBox("Ohh noo 😱.... 🐍 A snake bit you.."));
   }
   if (updatedPlayerPos > playerPosition) {
     console.log(createMessageBox("Hurray 🙌.... 🪜 You climbed a ladder.."));
@@ -154,10 +154,10 @@ function didPlayerWin(p1Position, p2Position, p3Position, p4Position) {
 }
 
 function whoWon(p1Position, p2Position, p3Position, p4Position, playerNames) {
-  if (p1Position === 100) { return '🥳' + playerNames[0] + ' Won.. 🎊\n'; }
-  if (p2Position === 100) { return '🥳' + playerNames[1] + ' Won.. 🎊\n'; }
-  if (p3Position === 100) { return '🥳' + playerNames[2] + ' Won.. 🎊\n'; }
-  if (p4Position === 100) { return '🥳' + playerNames[3] + ' Won.. 🎊\n'; }
+  if (p1Position === 100) { return '🥳..' + playerNames[0] + ' Won.. 🎊\n'; }
+  if (p2Position === 100) { return '🥳..' + playerNames[1] + ' Won.. 🎊\n'; }
+  if (p3Position === 100) { return '🥳..' + playerNames[2] + ' Won.. 🎊\n'; }
+  if (p4Position === 100) { return '🥳..' + playerNames[3] + ' Won.. 🎊\n'; }
 }
 
 function getPlayerNames(noOfPlayer) {
@@ -174,7 +174,7 @@ function printGrid(p1Position, p2Position, p3Position, p4Position) {
   for (let row = 10; row > 0; row -= 1) {
     createGrids(p1Position, p2Position, p3Position, p4Position, row * 10);
   }
-  console.log(getFooting());  
+  console.log(getFooting());
 }
 
 
@@ -193,24 +193,24 @@ function getRowFooting() {
 function createUpperPart(p1, p2, rowStartsWith, p1Name, p2Name) {
   let rowWallSAndL = '';
   for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
-    
+
     rowWallSAndL += boxNumber === p1 ? p1Name + '  ' : '    ';
     rowWallSAndL += p2 > 0 && boxNumber === p2 ? '  ' + p2Name : '    ';
     rowWallSAndL += '┃';
   }
-  
+
   return '┃' + rowWallSAndL;
 }
 
 function createMiddlePart(rowStartsWith) {
   let rowWallSAndL = '';
   for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
-    
+
     const boxValue = boxNumberSnakeOrLadder(boxNumber);
-    
+
     rowWallSAndL += boxValue === '100' ? boxValue + '  ┃   ' : boxValue + '   ┃   ';
   }
-  
+
   return '┃   ' + rowWallSAndL;
 }
 
@@ -218,7 +218,7 @@ function boxNumberSnakeOrLadder(boxNumber) {
   if (boxNumber === 5 || boxNumber === 14 || boxNumber === 42 || boxNumber === 53 || boxNumber === 64 || boxNumber === 75) {
     return '🪜';
   }
-  
+
   if (boxNumber === 38 || boxNumber === 45 || boxNumber === 51 || boxNumber === 65 || boxNumber === 91 || boxNumber === 97) {
     return '🐍';
   }
@@ -229,9 +229,9 @@ function boxNumberSnakeOrLadder(boxNumber) {
 }
 
 function createGrids(p1, p2, p3, p4, rowStartsWith) {
-  console.log(createUpperPart(p1, p2, rowStartsWith, 'p1', 'p2'));
+  console.log(createUpperPart(p1, p2, rowStartsWith, '🟡', '🔴'));
   console.log(createMiddlePart(rowStartsWith));
-  console.log(createUpperPart(p3, p4, rowStartsWith, 'p3', 'p4'));
+  console.log(createUpperPart(p3, p4, rowStartsWith, '🟢', '🔵'));
   if (rowStartsWith != 10) {
     console.log(getRowFooting());
   }
