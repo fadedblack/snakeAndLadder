@@ -76,6 +76,13 @@ function dice() {
   return diceValue;
 }
 
-console.log(printDice(dice()));
+for (let noOfTimes = 0; noOfTimes < 5000; noOfTimes += 20) {
+  for (let counter = 0; counter < 10000000; counter += 1) {
+  }
+  if (noOfTimes % 20 === 0) {
+    console.clear();
+    console.log(printDice(dice()));
+  }
+}
 // console.log(printDice5());
 
