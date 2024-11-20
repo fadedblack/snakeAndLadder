@@ -169,37 +169,108 @@ function getPlayerNames(noOfPlayer) {
   return playerNames;
 }
 
+function printGrid(p1Position, p2Position, p3Position, p4Position) {
+  console.log(getHeading());
+  for (let row = 10; row > 0; row -= 1) {
+    createGrids(p1Position, p2Position, p3Position, p4Position, row * 10);
+  }
+  console.log(getFooting());  
+}
+
 function startPlay() {
-  let p1Position = 0;
-  let p2Position = 0;
-  let p3Position = 0;
-  let p4Position = 0;
+  let p1Position = 1;
+  let p2Position = 1;
+  let p3Position = 1;
+  let p4Position = 1;
 
   console.log(createMessageBox("Snake 🐍 And Ladder 🪜 "));
 
   const noOfPlayer = +prompt("Enter No Of Players : ", '1');
   const playerNames = getPlayerNames(noOfPlayer);
 
+  let turn = 1;
+
   while (!didPlayerWin(p1Position, p2Position, p3Position, p4Position)) {
-    let turn = 1;
+    printGrid(p1Position, p2Position, p3Position, p4Position);
     prompt(playerNames[turn - 1] + "'s turn");
 
     if (turn === 1) {
-      p1Position = getNewPosition(p1Position + 1, playerNames[turn - 1]);
+      p1Position = getNewPosition(p1Position, playerNames[turn - 1]);
     }
     if (turn === 2) {
-      p2Position = getNewPosition(p2Position + 1, playerNames[turn - 1]);
+      p2Position = getNewPosition(p2Position, playerNames[turn - 1]);
     }
     if (turn === 3) {
-      p3Position = getNewPosition(p3Position + 1, playerNames[turn - 1]);
+      p3Position = getNewPosition(p3Position, playerNames[turn - 1]);
     }
     if (turn === 4) {
-      p4Position = getNewPosition(p4Position + 1, playerNames[turn - 1]);
+      p4Position = getNewPosition(p4Position, playerNames[turn - 1]);
     }
     turn = turn === noOfPlayer ? 1 : turn + 1;
   }
 
+
   return whoWon(p1Position, p2Position, p3Position, p4Position, playerNames);
+}
+
+
+function getHeading() {
+  return '┏━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┓';
+}
+
+function getFooting() {
+  return '┗━━━━━━━━┻━━━━━━━━┻━━━━━━━━┻━━━━━━━━┻━━━━━━━━┻━━━━━━━━┻━━━━━━━━┻━━━━━━━━┻━━━━━━━━┻━━━━━━━━┛';
+}
+
+function getRowFooting() {
+  return '┣━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━┫';
+}
+
+function createUpperPart(p1, p2, rowStartsWith, p1Name, p2Name) {
+  let rowWallSAndL = '';
+  for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
+
+    rowWallSAndL += boxNumber === p1 ? p1Name + '  ' : '    ';
+    rowWallSAndL += p2 > 0 && boxNumber === p2 ? '  ' + p2Name : '    ';
+    rowWallSAndL += '┃';
+  }
+
+  return '┃' + rowWallSAndL;
+}
+
+function createMiddlePart(rowStartsWith) {
+  let rowWallSAndL = '';
+  for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
+
+    const boxValue = boxNumberSnakeOrLadder(boxNumber);
+
+    rowWallSAndL += boxValue === '100' ? boxValue + '  ┃   ' : boxValue + '   ┃   ';
+  }
+
+  return '┃   ' + rowWallSAndL;
+}
+
+function boxNumberSnakeOrLadder(boxNumber) {
+  if (boxNumber === 5 || boxNumber === 14 || boxNumber === 42 || boxNumber === 53 || boxNumber === 64 || boxNumber === 75) {
+    return '🪜';
+  }
+
+  if (boxNumber === 38 || boxNumber === 45 || boxNumber === 51 || boxNumber === 65 || boxNumber === 91 || boxNumber === 97) {
+    return '🐍';
+  }
+  if (boxNumber < 10) {
+    return "0" + boxNumber;
+  }
+  return '' + boxNumber;
+}
+
+function createGrids(p1, p2, p3, p4, rowStartsWith) {
+  console.log(createUpperPart(p1, p2, rowStartsWith, 'p1', 'p2'));
+  console.log(createMiddlePart(rowStartsWith));
+  console.log(createUpperPart(p3, p4, rowStartsWith, 'p3', 'p4'));
+  if (rowStartsWith != 10) {
+    console.log(getRowFooting());
+  }
 }
 
 console.log(startPlay());
