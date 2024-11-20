@@ -18,7 +18,7 @@ function createHeader() {
 function createBody(p1, p2, p3, p4) {
   let body = '';
   for (let index = 0; index < 4; index += 1) {
-    body += '    ┃        ┃    \n';
+    body += '    ┃        ┃    ';
     body += '    ┃        ┃    ';
   }
 
