@@ -194,7 +194,7 @@ function createUpperPart(p1, p2, rowStartsWith, p1Name, p2Name) {
   for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
 
     rowWallSAndL += boxNumber === p1 ? p1Name + '  ' : '    ';
-    rowWallSAndL += p2 > 0 && boxNumber === p2 ? ' ' + p2Name: '    ';
+    rowWallSAndL += p2 > 0 && boxNumber === p2 ? ' ' + p2Name : '    ';
     rowWallSAndL += '┃';
   }
 
@@ -206,8 +206,12 @@ function createMiddlePart(rowStartsWith) {
   for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
 
     const boxValue = boxNumberSnakeOrLadder(boxNumber);
+    if (boxValue === '100') {
+      rowWallSAndL += boxValue + '  ┃   ';
+      continue;
+    }
 
-    rowWallSAndL += boxValue === '100' ? boxValue + '  ┃   ' : boxValue + '   ┃   ';
+    rowWallSAndL += boxValue.length === 4 ? boxValue + ' ┃   ' : boxValue + '   ┃   ';
   }
 
   return '┃   ' + rowWallSAndL;
@@ -215,7 +219,7 @@ function createMiddlePart(rowStartsWith) {
 
 function boxNumberSnakeOrLadder(boxNumber) {
   if (boxNumber === 5 || boxNumber === 14 || boxNumber === 42 || boxNumber === 53 || boxNumber === 64 || boxNumber === 75) {
-    return '🪜';
+    return '🪜🔴';
   }
 
   if (boxNumber === 38 || boxNumber === 45 || boxNumber === 51 || boxNumber === 65 || boxNumber === 91 || boxNumber === 97) {
