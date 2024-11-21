@@ -106,18 +106,18 @@ function rollDice() {
 
 function getSnakeOrLadder(playerPosition) {
   switch (playerPosition) {
-    case 5: return 58;
-    case 14: return 59;
-    case 38: return 20;
-    case 42: return 60;
-    case 45: return 7;
-    case 51: return 10;
-    case 53: return 72;
-    case 64: return 83;
-    case 65: return 54;
-    case 75: return 94;
-    case 91: return 73;
-    case 97: return 3;
+    case 5: return '58';
+    case 14: return '59';
+    case 38: return '20';
+    case 42: return '60';
+    case 45: return '07';
+    case 51: return '10';
+    case 53: return '72';
+    case 62: return '83';
+    case 65: return '54';
+    case 75: return '94';
+    case 91: return '73';
+    case 97: return '03';
   }
   return playerPosition;
 }
@@ -143,7 +143,7 @@ function getNewPosition(playerPosition, playerNumber) {
   const diceValue = rollDice();
 
   playerPosition += (playerPosition + diceValue <= 100) ? diceValue : 0;
-  const updatedPlayerPos = getSnakeOrLadder(playerPosition);
+  const updatedPlayerPos = +getSnakeOrLadder(playerPosition);
 
   updatePosition(updatedPlayerPos, playerPosition, diceValue, playerNumber);
 
@@ -190,6 +190,18 @@ function getRowFooting() {
   return '┣━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━╋━━━━━━━━┫';
 }
 
+function cellAfterSnakeOrLadder(boxNumber) {
+  const cellAfterLadder = boxNumber === 6 || boxNumber === 15 || boxNumber === 43 || boxNumber === 54 || boxNumber === 63 || boxNumber === 76;
+  const cellAfterSnake = boxNumber === 39 || boxNumber === 46 || boxNumber === 52 || boxNumber === 66 || boxNumber === 92 || boxNumber === 98;
+
+  if (cellAfterLadder || cellAfterSnake) {
+    return '   ┃ ';
+  }
+
+  return '   ┃   ';
+
+}
+
 function createUpperPart(p1, p2, rowStartsWith, p1Name, p2Name) {
   let rowWallSAndL = '';
   for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
@@ -207,24 +219,23 @@ function createMiddlePart(rowStartsWith) {
   for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
 
     const boxValue = boxNumberSnakeOrLadder(boxNumber);
-    // if (boxValue === '100') {
-    //   rowWallSAndL += boxValue + '  ┃   ';
-    //   continue;
-    // }
-
-    rowWallSAndL += boxValue.length === 3 ? boxValue + '  ┃   ' : boxValue + '   ┃   ';
+    if (boxValue === '100') {
+      rowWallSAndL += boxValue + '  ┃   ';
+      continue;
+    }
+    rowWallSAndL += boxValue.length === 6 ? boxValue + ' ┃   ' : boxValue + cellAfterSnakeOrLadder(boxNumber);
   }
 
   return '┃   ' + rowWallSAndL;
 }
 
 function boxNumberSnakeOrLadder(boxNumber) {
-  if (boxNumber === 5 || boxNumber === 14 || boxNumber === 42 || boxNumber === 53 || boxNumber === 64 || boxNumber === 75) {
-    return '🪜';
+  if (boxNumber === 5 || boxNumber === 14 || boxNumber === 42 || boxNumber === 53 || boxNumber === 62 || boxNumber === 75) {
+    return '🪜->' + getSnakeOrLadder(boxNumber);
   }
 
   if (boxNumber === 38 || boxNumber === 45 || boxNumber === 51 || boxNumber === 65 || boxNumber === 91 || boxNumber === 97) {
-    return '🐍';
+    return '🐍->' + getSnakeOrLadder(boxNumber);
   }
   if (boxNumber < 10) {
     return "0" + boxNumber;
