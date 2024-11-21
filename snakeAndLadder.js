@@ -90,7 +90,7 @@ function createMessageBox(message) {
 function rollDice() {
   let diceValue = 0;
 
-  for (let noOfTimes = 0; noOfTimes < 350; noOfTimes += 20) {
+  for (let noOfTimes = 0; noOfTimes < 350; noOfTimes += 30) {
     for (let counter = 0; counter < noOfTimes * 1000000; counter += 1) {
     }
 
@@ -177,7 +177,6 @@ function printGrid(p1Position, p2Position, p3Position, p4Position) {
   console.log(getFooting());
 }
 
-
 function getHeading() {
   return '┏━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┓';
 }
@@ -195,7 +194,7 @@ function createUpperPart(p1, p2, rowStartsWith, p1Name, p2Name) {
   for (let boxNumber = rowStartsWith; boxNumber > rowStartsWith - 10; boxNumber--) {
 
     rowWallSAndL += boxNumber === p1 ? p1Name + '  ' : '    ';
-    rowWallSAndL += p2 > 0 && boxNumber === p2 ? '  ' + p2Name : '    ';
+    rowWallSAndL += p2 > 0 && boxNumber === p2 ? ' ' + p2Name: '    ';
     rowWallSAndL += '┃';
   }
 
@@ -229,9 +228,9 @@ function boxNumberSnakeOrLadder(boxNumber) {
 }
 
 function createGrids(p1, p2, p3, p4, rowStartsWith) {
-  console.log(createUpperPart(p1, p2, rowStartsWith, '🟡', '🔴'));
+  console.log(createUpperPart(p1, p2, rowStartsWith, ' 1️⃣', '2️⃣  '));
   console.log(createMiddlePart(rowStartsWith));
-  console.log(createUpperPart(p3, p4, rowStartsWith, '🟢', '🔵'));
+  console.log(createUpperPart(p3, p4, rowStartsWith, ' 3️⃣', '4️⃣  '));
   if (rowStartsWith != 10) {
     console.log(getRowFooting());
   }
