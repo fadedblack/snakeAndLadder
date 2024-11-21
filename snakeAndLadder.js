@@ -75,6 +75,7 @@ function dice() {
 
 function getALine(length) {
   let line = '';
+
   for (let iterator = 0; iterator < length; iterator += 1) {
     line += '━';
   }
@@ -117,24 +118,24 @@ function getSnakeOrLadder(playerPosition) {
     case 75: return 94;
     case 91: return 73;
     case 97: return 3;
-    default: return playerPosition;
   }
+  return playerPosition;
 }
 
 function playerPosMessage(updatedPlayerPos, playerPosition, diceValue) {
-  if (updatedPlayerPos < playerPosition) {
-    console.log(createMessageBox("Ohh noo 😱.... 🐍 A snake bit you.."));
-  }
-  if (updatedPlayerPos > playerPosition) {
-    console.log(createMessageBox("Hurray 🙌.... 🪜 You climbed a ladder.."));
-  }
   if (updatedPlayerPos === playerPosition) {
-    console.log(createMessageBox("Moved Forward by " + diceValue + "...😊"));
+    return createMessageBox("Moved Forward by " + diceValue + "...😊");
   }
+
+  if (updatedPlayerPos < playerPosition) {
+    return createMessageBox("Ohh noo 😱.... 🐍 A snake bit you..");
+  }
+
+  return createMessageBox("Hurray 🙌.... 🪜 You climbed a ladder..");
 }
 
 function updatePosition(updatedPlayerPos, playerPosition, diceValue, playerNumber) {
-  playerPosMessage(updatedPlayerPos, playerPosition, diceValue);
+  console.log(playerPosMessage(updatedPlayerPos, playerPosition, diceValue));
   console.log(playerNumber + " Current Position is: " + updatedPlayerPos);
 }
 
